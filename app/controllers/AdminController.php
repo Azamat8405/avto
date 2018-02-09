@@ -20,6 +20,10 @@ class AdminController extends \Phalcon\Mvc\Controller
 
     public function listMessagesAction()
     {
+    	if(!Auth::isAuth())
+		{
+			$this->response->redirect('/admin');
+		}
 		$messages = Messages::find([
 			"order" => "add_date DESC"
 		]);
@@ -40,6 +44,10 @@ class AdminController extends \Phalcon\Mvc\Controller
 
 	public function deleteMessageAction()
     {
+       	if(!Auth::isAuth())
+		{
+			$this->response->redirect('/admin');
+		}
 		$message = Messages::findFirst($this->request->get('id'));
 		if($message)
 		{
@@ -50,9 +58,19 @@ class AdminController extends \Phalcon\Mvc\Controller
 
 	public function addMessageAction()
     {
+       	if(!Auth::isAuth())
+		{
+			$this->response->redirect('/admin');
+		}
+
 	}
 	public function saveMessageAction()
 	{
+       	if(!Auth::isAuth())
+		{
+			$this->response->redirect('/admin');
+		}
+
 		$id = $this->request->getPost('id');
 
 		$title = $this->request->getPost('title');
@@ -84,6 +102,11 @@ class AdminController extends \Phalcon\Mvc\Controller
 
 	public function editMessageAction()
 	{
+       	if(!Auth::isAuth())
+		{
+			$this->response->redirect('/admin');
+		}
+
 		$message = Messages::findFirst($this->request->get('id'));
 		if($message)
 		{
